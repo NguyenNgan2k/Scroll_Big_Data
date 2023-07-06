@@ -11,3 +11,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.TableScrollContainer {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.Header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 2px solid lightblue;
+}
+
+.Header:hover {
+  cursor: pointer;
+  border-color: blue;
+}
+
+.Row {
+  height: 32px;
+  background-color: whitesmoke;
+}
+
+.Resizable {
+  text-align: left;
+  overflow: hidden;
+  resize: horizontal;
+  min-width: 150px;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  text-align: left;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
