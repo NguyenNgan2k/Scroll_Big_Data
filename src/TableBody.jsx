@@ -1,7 +1,8 @@
 import React from "react";
-import throttle from "lodash.throttle";
+import * as _ from "lodash";
 
 //max- lấy cái lớn nhất trong ds
+console.log(document.documentElement.clientHeight,  window.innerHeight)
 const screenHeight = Math.max(
   document.documentElement.clientHeight,
   window.innerHeight || 0
@@ -12,7 +13,9 @@ const offset = screenHeight; // We want to render more than we see, or else we w
 // chiều cao của 1 hàng
 const itemRowHeight = 32; // same height as each row (32px, see styles.css)
 // floor - làm tròn
+//số rows sẽ render ra , đang bị x2
 const rowsToRender = Math.floor((screenHeight + offset) / itemRowHeight);
+console.log(rowsToRender)
 
 const TableBody = ({ data }) => {
   const [displayStart, setDisplayStart] = React.useState(0);
@@ -21,12 +24,18 @@ const TableBody = ({ data }) => {
 
   const setDisplayPositions = React.useCallback(
     (scroll) => {
-      // we want to start rendering a bit above the visible screen
+      //ko lấy phần sau dấu chấm
+      console.log('rowsToRender',rowsToRender,offset)
+      //chiều cao đc kéo lên -  Số phần tử đag hiển thị trong dom - 1 nửa chiều cao nọi dung(chiều cao của thanh scoll)
       const scrollWithOffset = Math.floor(scroll - rowsToRender - offset / 2);
-      // start position should never be less than 0
+      console.log(scroll,window.scrollY,scrollWithOffset)
+
+      //lm tròn đúng
       const displayStartPosition = Math.round(
         Math.max(0, Math.floor(scrollWithOffset / itemRowHeight))
       );
+
+      console.log('displayStartPosition',displayStartPosition,scrollWithOffset)
 
       // end position should never be larger than our data array
       const displayEndPosition = Math.round(
@@ -46,8 +55,8 @@ const TableBody = ({ data }) => {
 
   // add event listeners so we can change the scroll position, and alter what rows to display
   React.useEffect(() => {
-    const onScroll = throttle(() => {
-      const scrollTop = window.scrollY;
+    const onScroll = _.throttle(() => {
+      const scrollTop = window.scrollY; // số px đã đc kéo lên
       if (data.length !== 0) {
         setScrollPosition(scrollTop);
         setDisplayPositions(scrollTop);
